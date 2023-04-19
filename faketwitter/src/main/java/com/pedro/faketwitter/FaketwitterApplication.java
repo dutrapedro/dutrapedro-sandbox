@@ -1,13 +1,13 @@
-package com.pedro.springfun;
+package com.pedro.faketwitter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class FaketwitterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(FaketwitterApplication.class, args);
 	}
 
 }

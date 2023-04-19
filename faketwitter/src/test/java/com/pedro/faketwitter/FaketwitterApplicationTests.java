@@ -1,10 +1,10 @@
-package com.pedro.springfun;
+package com.pedro.faketwitter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class FaketwitterApplicationTests {
 
 	@Test
 	void contextLoads() {
