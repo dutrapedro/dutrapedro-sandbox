@@ -10,12 +10,12 @@ pipeline {
         	steps {
             	sh './gradlew clean build'
             }
-        },
+        }
         stage ('Build docker image') {
             steps {
                 sh 'docker build -t pedro/faketwitter .'
             }
-        },
+        }
         stage ('Deploy') {
             steps {
                 sh 'docker run -d -p 3000:3000 pedro/faketwitter'
