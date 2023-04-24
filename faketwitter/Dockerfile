@@ -1,4 +1,6 @@
-FROM cassandra
-COPY scripts/setup_keyspace.cql .
-CMD ["cassandra", "-f"]
+FROM openjdk:11-jdk
+VOLUME /tmp
+COPY build/libs/faketwitter-0.0.1-SNAPSHOT.jar app.jar
+
+CMD ["sh","-c","java -jar app.jar"]
 
