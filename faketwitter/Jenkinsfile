@@ -5,7 +5,7 @@ pipeline {
 		stage ("Build") {
         	steps {
                 dir('/var/jenkins_home/workspace/faketwitter/faketwitter') {
-                    sh 'gradlew clean build'
+                    sh './gradlew clean build'
                 }
             }
         }
