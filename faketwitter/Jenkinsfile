@@ -1,5 +1,7 @@
 pipeline {
-    agent 'general_builder'
+    agent {
+        label 'general_builder'
+    }
 
     stages {
 		stage ("Build") {
