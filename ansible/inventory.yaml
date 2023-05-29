@@ -1,0 +1,5 @@
+virtualmachines:
+  hosts:
+    vm01:
+      ansible_host: ec2-user@<HOST>
+      ansible_ssh_private_key_file: ./aws-sandbox-machine.pem

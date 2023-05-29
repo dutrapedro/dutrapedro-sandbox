@@ -1,0 +1,3 @@
+*.pem
+authorized_keys
+jenkins_private_key

@@ -1,0 +1,75 @@
+---
+- name: Setup deploy group
+  hosts: vm01
+  remote_user: ec2-user
+
+  tasks:
+  - name: Create deploy group
+    ansible.builtin.group:
+      name: wheel
+      state: present
+  - name: Add bypass to password
+    become: true
+    become_user: root
+    ansible.builtin.lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+  - name: Add ec2-user user to deploy group
+    ansible.builtin.user:
+      name: ec2-user
+      groups: wheel
+      append: true
+      state: present
+
+- name: Update packages
+  hosts: vm01
+  remote_user: ec2-user
+  become: true
+  become_user: root
+
+  tasks:
+  - name: Update all
+    ansible.builtin.yum:
+      name: '*'
+      state: latest
+
+  - name: Install docker
+    ansible.builtin.yum:
+      name: docker
+      state: latest
+
+- name: Setup docker to Jenkins run
+  hosts: vm01
+  remote_user: ec2-user
+
+  tasks:
+  - name: Add jenkins user to docker group
+    become: true
+    become_user: root
+    ansible.builtin.user:
+      name: jenkins
+      groups: docker
+      append: true
+      create_home: true
+
+  - name: Create .ssh directory
+    become: true
+    become_user: jenkins
+    ansible.builtin.file:
+      path: /home/jenkins/.ssh
+      state: directory
+      mode: '0700'
+
+  - name: Copy authorized_keys
+    become: true
+    become_user: jenkins
+    ansible.builtin.copy:
+      src: ./authorized_keys
+      dest: /home/jenkins/.ssh
+      owner: jenkins
+      group: jenkins
+      mode: '0600'
+
